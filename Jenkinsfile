@@ -20,14 +20,6 @@ pipeline {
             }
         }
 
-        stage('Print Report') {
-            steps {
-                script {
-                    sh 'cat newman/Reports/HTMLReport.html' // Ajusta la ruta del archivo según donde se genere
-                }
-            }
-        }
-
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
