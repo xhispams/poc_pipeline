@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Build') {
             steps {
@@ -8,24 +7,22 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                echo 'Testing ...'
-                script {
-                    sh '''
-                        /usr/local/bin/node /usr/local/bin/newman run /postman_jenkins_api_tests/tests/API_Tests.postman_collection.json -e /postman_jenkins_api_tests/environment/API_Environment.postman_environment.json -d /postman_jenkins_api_tests/tests/data.json --suppress-exit-code -r html --reporter-html-export /path/to/report.html
-                    '''
-                }
-            }
+    steps {
+        script {
+            sh '/usr/local/bin/newman run /postman_jenkins_api_tests/tests/API_Tests.postman_collection.json -e /postman_jenkins_api_tests/environment/API_Environment.postman_environment.json -d /postman_jenkins_api_tests/tests/data.json --suppress-exit-code'
         }
+    }
+}
+       stage('Test') {
+           steps {
+               script {
+                   sh '/usr/local/bin/node /usr/local/bin/newman run /postman_jenkins_api_tests/tests/API_Tests.postman_collection.json -e /postman_jenkins_api_tests/environment/API_Environment.postman_environment.json -d /postman_jenkins_api_tests/tests/data.json --suppress-exit-code'
+               }
+           }
+       }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-            }
-        }
-        stage('Archive Report') {
-            steps {
-                sh 'ls /path/to/report.html' // Verifica que el archivo de reporte exista
-                archiveArtifacts artifacts: 'report.html', fingerprint: true
             }
         }
     }
