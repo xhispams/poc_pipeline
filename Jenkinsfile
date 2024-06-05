@@ -10,7 +10,9 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh '/usr/local/bin/node /usr/local/bin/newman run /postman_jenkins_api_tests/tests/API_Tests.postman_collection.json -e /postman_jenkins_api_tests/environment/API_Environment.postman_environment.json -d /postman_jenkins_api_tests/tests/data.json --suppress-exit-code -r html --reporter-html-export /usr/local/bin/reporte/report.html'
+                    sh '''
+                        /usr/local/bin/node /usr/local/bin/newman run /path/to/API_Tests.postman_collection.json -e /path/to/API_Environment.postman_environment.json -d /path/to/data.json --suppress-exit-code -r html --reporter-html-export /path/to/report.html
+                    '''
                 }
             }
         }
@@ -21,7 +23,8 @@ pipeline {
         }
         stage('Archive Report') {
             steps {
-                archiveArtifacts artifacts: '/usr/local/bin/reporte/report.html', fingerprint: true
+                sh 'ls /path/to/report.html' // Verifica que el archivo de reporte exista
+                archiveArtifacts artifacts: '/path/to/report.html', fingerprint: true
             }
         }
     }
