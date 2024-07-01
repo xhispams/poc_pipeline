@@ -6,8 +6,6 @@ Besides, we are going to be using a sample server which contains a several of pu
   
   ![](images/jenkins-job-execution-2.gif)
 
-### Prerequisites
-  - Docker version 19.03.12
 
 ### Getting Started
   - Clone this repository on your local machine:
